@@ -1,0 +1,145 @@
+-- Create the GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "Smelly"
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create a frame for the speed adjuster, jump power, FOV, gravity changer, reset button, and close button
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 400, 0, 340) -- Increased frame height to accommodate the gravity charger
+frame.Position = UDim2.new(0.5, -200, 0.5, -170)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Changed background color
+frame.BorderSizePixel = 0 -- Removed border
+frame.Parent = gui
+
+-- Function to create a styled TextBox
+local function createTextBox(position, placeholder)
+    local textBox = Instance.new("TextBox")
+    textBox.Size = UDim2.new(0, 360, 0, 40)
+    textBox.Position = position
+    textBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50) -- Changed background color
+    textBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+    textBox.Font = Enum.Font.SourceSans
+    textBox.TextSize = 18
+    textBox.Text = ""
+    textBox.PlaceholderText = placeholder
+    textBox.Parent = frame
+    return textBox
+end
+
+-- Function to create a styled label
+local function createLabel(position, text)
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(0, 80, 0, 20)
+    label.Position = position
+    label.BackgroundTransparency = 1
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+    label.Font = Enum.Font.SourceSans
+    label.TextSize = 16
+    label.Text = text
+    label.Parent = frame
+    return label
+end
+
+-- Create TextBoxes for speed, jump power, FOV, and gravity input
+local speedTextBox = createTextBox(UDim2.new(0, 20, 0, 20), "Enter speed...")
+local jumpTextBox = createTextBox(UDim2.new(0, 20, 0, 70), "Enter jump power...")
+local fovTextBox = createTextBox(UDim2.new(0, 20, 0, 120), "Enter FOV...")
+local gravityTextBox = createTextBox(UDim2.new(0, 20, 0, 170), "Enter gravity...")
+
+-- Create labels to display the speed, jump power, FOV, and gravity values
+local speedLabel = createLabel(UDim2.new(0, 380, 0, 20), "0")
+local jumpLabel = createLabel(UDim2.new(0, 380, 0, 70), "0")
+local fovLabel = createLabel(UDim2.new(0, 380, 0, 120), "0")
+local gravityLabel = createLabel(UDim2.new(0, 380, 0, 170), "0")
+
+-- Create a button to reset the speed, jump power, FOV, and gravity
+local resetButton = Instance.new("TextButton")
+resetButton.Size = UDim2.new(0, 360, 0, 40)
+resetButton.Position = UDim2.new(0, 20, 0, 220)
+resetButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+resetButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+resetButton.Font = Enum.Font.SourceSans
+resetButton.TextSize = 18
+resetButton.Text = "Reset Speed, Jump Power, FOV, and Gravity"
+resetButton.Parent = frame
+
+-- Create a button to close the GUI
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 29, 0, 29)
+closeButton.Position = UDim2.new(1, -20, 0, 0)
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.Font = Enum.Font.SourceSans
+closeButton.TextSize = 18
+closeButton.Text = "Close GUI"
+closeButton.Parent = frame
+
+-- Default values
+local defaultSpeed = 16
+local defaultJumpPower = 50
+local defaultFOV = 70
+local defaultGravity = 196.2
+
+-- Function to update the speed based on the entered value
+local function updateSpeed()
+    local speed = tonumber(speedTextBox.Text)
+    if speed then
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speed
+        speedLabel.Text = tostring(speed)
+    end
+end
+
+-- Function to update the jump power based on the entered value
+local function updateJumpPower()
+    local jumpPower = tonumber(jumpTextBox.Text)
+    if jumpPower then
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = jumpPower
+       jumpLabel.Text = tostring(jumpPower)
+    end
+end
+
+-- Function to update the FOV based on the entered value
+local function updateFOV()
+    local fov = tonumber(fovTextBox.Text)
+    if fov then
+        game.Workspace.CurrentCamera.FieldOfView = fov
+        fovLabel.Text = tostring(fov)
+    end
+end
+
+-- Function to update the gravity based on the entered value
+local function updateGravity()
+    local gravity = tonumber(gravityTextBox.Text)
+    if gravity then
+        game.Workspace.Gravity = Vector3.new(0, -gravity, 0)
+        gravityLabel.Text = tostring(gravity)
+    end
+end
+
+-- Function to reset the speed, jump power, FOV, and gravity to default values
+local function resetValues()
+    speedTextBox.Text = ""
+    jumpTextBox.Text = ""
+    fovTextBox.Text = ""
+    gravityTextBox.Text = ""
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = defaultSpeed
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = defaultJumpPower
+    game.Workspace.CurrentCamera.FieldOfView = defaultFOV
+    game.Workspace.Gravity = Vector3.new(0, -defaultGravity, 0)
+    speedLabel.Text = tostring(defaultSpeed)
+    jumpLabel.Text = tostring(defaultJumpPower)
+    fovLabel.Text = tostring(defaultFOV)
+    gravityLabel.Text = tostring(defaultGravity)
+end
+
+-- Connect the button clicks to their respective functions
+resetButton.MouseButton1Click:Connect(resetValues)
+closeButton.MouseButton1Click:Connect(function()
+    gui:Destroy()
+end)
+
+-- Connect the TextBox events to their respective functions
+speedTextBox.FocusLost:Connect(updateSpeed)
+jumpTextBox.FocusLost:Connect(updateJumpPower)
+fovTextBox.FocusLost:Connect(updateFOV)
+gravityTextBox.FocusLost:Connect(updateGravity)
