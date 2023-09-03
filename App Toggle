@@ -1,0 +1,54 @@
+-- Create a button to show/hide the GUI
+local toggleButton = Instance.new("TextButton")
+toggleButton.Size = UDim2.new(0, 360, 0, 40)
+toggleButton.Position = UDim2.new(0, 20, 0, 10)
+toggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+toggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+toggleButton.Font = Enum.Font.SourceSans
+toggleButton.TextSize = 18
+toggleButton.Text = "Toggle GUI"
+toggleButton.Parent = gui
+
+-- Function to toggle the GUI visibility
+local function toggleGUI()
+    frame.Visible = not frame.Visible
+end
+
+toggleButton.MouseButton1Click:Connect(toggleGUI)
+
+.fromRGB(255, 255, 255)
+    label.Font = Enum.Font.SourceSansBold -- Use a bold font
+    label.TextSize = 16
+    label.Text = text
+    label.Parent = frame
+    return label
+end
+
+-- Modify button appearance
+local function createButton(position, text)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0, 360, 0, 40)
+    button.Position = position
+    button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextColor3 = Color3.fromRGB(0, 0, 0)
+    button.Font = Enum.Font.SourceSansBold -- Use a bold font
+    button.TextSize = 18
+    button.Text = text
+    button.Parent = frame
+    return button
+end
+
+-- Modify text box appearance
+local function createTextBox(position, placeholder)
+    local textBox = Instance.new("TextBox")
+    textBox.Size = UDim2.new(0, 360, 0, 40)
+    textBox.Position = position
+    textBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    textBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+    textBox.Font = Enum.Font.SourceSans
+    textBox.TextSize = 18
+    textBox.Text = ""
+    textBox.PlaceholderText = placeholder
+    textBox.Parent = frame
+    return textBox
+end
