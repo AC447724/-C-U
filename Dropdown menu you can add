@@ -1,0 +1,68 @@
+-- Create a drop-down menu
+local dropdown = Instance.new("TextButton")
+dropdown.Size = UDim2.new(0, 360, 0, 40)
+dropdown.Position = UDim2.new(0, 20, 0, 270)
+dropdown.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+dropdown.TextColor3 = Color3.fromRGB(255, 255, 255)
+dropdown.Font = Enum.Font.SourceSans
+dropdown.TextSize = 18
+dropdown.Text = "Colors"
+dropdown.Parent = frame
+
+-- Create buttons for adjusting colors
+local greenButton = Instance.new("TextButton")
+greenButton.Size = UDim2.new(0, 360, 0, 40)
+greenButton.Position = UDim2.new(0, 20, 0, 320)
+greenButton.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+greenButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+greenButton.Font = Enum.Font.SourceSans
+greenButton.TextSize = 18
+greenButton.Text = "Green"
+greenButton.Parent = frame
+
+local redButton = Instance.new("TextButton")
+redButton.Size = UDim2.new(0, 360, 0, 40)
+redButton.Position = UDim2.new(0, 20, 0, 370)
+redButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+redButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+redButton.Font = Enum.Font.SourceSans
+redButton.TextSize = 18
+redButton.Text = "Red"
+redButton.Parent = frame
+
+local blueButton = Instance.new("TextButton")
+blueButton.Size = UDim2.new(0, 360, 0, 40)
+blueButton.Position = UDim2.new(0, 20, 0, 420)
+blueButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+blueButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+blueButton.Font = Enum.Font.SourceSans
+blueButton.TextSize = 18
+blueButton.Text = "Blue"
+blueButton.Parent = frame
+
+-- Function to update the GUI color
+local function updateGuiColor(color)
+    frame.BackgroundColor3 = color
+end
+
+-- Connect the dropdown button click to toggle the visibility of the color buttons
+local colorButtonsVisible = false
+dropdown.MouseButton1Click:Connect(function()
+    colorButtonsVisible = not colorButtonsVisible
+    greenButton.Visible = colorButtonsVisible
+    redButton.Visible = colorButtonsVisible
+    blueButton.Visible = colorButtonsVisible
+end)
+
+-- Connect the color buttons to update the GUI color
+greenButton.MouseButton1Click:Connect(function()
+    updateGuiColor(Color3.fromRGB(0, 255, 0))
+end)
+
+redButton.MouseButton1Click:Connect(function()
+    updateGuiColor(Color3.fromRGB(255, 0, 0))
+end)
+
+blueButton.MouseButton1Click:Connect(function()
+    updateGuiColor(Color3.fromRGB(0, 0, 255))
+end)
